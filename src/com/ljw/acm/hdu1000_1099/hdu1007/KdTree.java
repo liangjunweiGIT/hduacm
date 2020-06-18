@@ -1,6 +1,5 @@
 package com.ljw.acm.hdu1000_1099.hdu1007;
 
-import java.text.DecimalFormat;
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.Scanner;
@@ -11,11 +10,11 @@ import java.util.Scanner;
  * @date 2020/6/17 15:59
  */
 public class KdTree {
-    static int MAX = 100005;
+    private static int MAX = 100005;
     private static Node[] tree = new Node[MAX], a = new Node[MAX];
     private static int[] dv = new int[MAX];
-    private static int nowDv, n, mid;
-    private static Node kdans, qu;
+    private static int nowDv, n;
+    private static Node kdans = new Node();
 
     static class Node {
         double[] p = new double[2];
@@ -43,11 +42,11 @@ public class KdTree {
         double now = -1;
         for (int i = 0; i < 2; ++i) {
             double ave = 0, sum = 0;
-            for (int j = 0; j < r; ++j) {
+            for (int j = 1; j <= r; ++j) {
                 ave += tree[j].p[i];
             }
             ave /= r - l + 1;
-            for (int j = 0; j < r; ++j) {
+            for (int j = 1; j <= r; ++j) {
                 sum += (tree[j].p[i] - ave) * (tree[j].p[i] - ave);
             }
             sum /= (r - l + 1) * 1.0;
@@ -72,9 +71,9 @@ public class KdTree {
         }
         d = getD(l, r);
         nowDv = d;
-        mid = l + r / 2;
+        int mid = (l + r) / 2;
         dv[mid] = d;
-        Arrays.sort(tree, l, r, new Comparator<Node>() {
+        Arrays.sort(tree, l, r + 1, new Comparator<Node>() {
             @Override
             public int compare(Node o1, Node o2) {
                 if (o1.p[nowDv] == o2.p[nowDv]) {
@@ -91,6 +90,7 @@ public class KdTree {
         if (l > r) {
             return;
         }
+        int mid = (l + r) / 2;
         double nowd = getDis(tree[mid], q);
         tree[mid].dis = nowd;
         if (nowd < kdans.dis && tree[mid].id != q.id) {
@@ -101,25 +101,24 @@ public class KdTree {
         if (t < 0) {
             searchTree(l, mid - 1, q);
             if (kdans.dis > t * t && l != r) {
-                searchTree(mid + 1, r, q);
+                searchTree((l + r) / 2 + 1, r, q);
             }
         } else {
             searchTree(mid + 1, r, q);
             if (kdans.dis > t * t && l != r) {
-                searchTree(l, mid - 1, q);
+                searchTree(l, (l + r) / 2 - 1, q);
             }
         }
     }
 
     public static void main(String[] args) {
-        DecimalFormat df = new DecimalFormat("0.00");
         Scanner sc = new Scanner(System.in);
         while (sc.hasNext()) {
             int n = sc.nextInt();
             if (n == 0) {
                 return;
             }
-            for (int i = 0; i < n; i++) {
+            for (int i = 1; i <= n; i++) {
                 if (tree[i] == null) {
                     tree[i] = new Node();
                 }
@@ -128,16 +127,17 @@ public class KdTree {
                 tree[i].p[1] = sc.nextDouble();
                 a[i] = tree[i];
             }
-            builtTree(0, n, 0);
+
+            builtTree(1, n, 0);
             kdans.dis = Double.MAX_VALUE;
             for (int i = 1; i <= n; ++i) {
-                qu = a[i];
+                Node qu = a[i];
                 qu.id = i;
                 searchTree(1, n, qu);
             }
             kdans.dis = Math.sqrt(kdans.dis);
             kdans.dis /= 2.0;
-            System.out.println(df.format(kdans.dis));
+            System.out.println(String.format("%.2f", kdans.dis));
         }
     }
 }
