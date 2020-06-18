@@ -1,15 +1,15 @@
-package com.ljw.acm.hdu1000_1100.hdu1007;
+package com.ljw.acm.hdu1000_1099.hdu1007;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
 
 /**
  * http://acm.hdu.edu.cn/showproblem.php?pid=1007
- *
+ * 题理解错了,找到了能概括所有点的最小圆
  * @author junwei.liang01
  * @date 2020/6/16 11:14
  */
-public class Hdu1007 {
+public class Hdu1007Wrong {
     static class Node {
         Double x;
         Double y;

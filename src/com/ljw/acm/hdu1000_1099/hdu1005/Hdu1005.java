@@ -1,4 +1,4 @@
-package com.ljw.acm.hdu1000_1100.hdu1005;
+package com.ljw.acm.hdu1000_1099.hdu1005;
 
 import java.util.Scanner;
 

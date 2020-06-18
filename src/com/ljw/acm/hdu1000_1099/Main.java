@@ -1,4 +1,4 @@
-package com.ljw.acm.hdu1000_1100;
+package com.ljw.acm.hdu1000_1099;
 
 public class Main {
 
